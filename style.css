@@ -1,7 +1,24 @@
-spoiler{
-    filter: blur(4px)
+body{
+    background-color: #000c18;
+    color: white;
+    user-select: none;
+    font-family: 'Roboto Mono', monospace;
 }
 
-spoiler:active{
+pre{
+    color: black;
+    user-select: text;
+}
+
+spoiler{
+    cursor: pointer;
+    filter: blur(4px);
+}
+
+.activeSpoiler{
     filter: blur(0px);
+}
+
+explanation{
+    font-size: smaller;
 }

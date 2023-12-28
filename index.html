@@ -1,13 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>twistynado's code</title>
 </head>
+
 <body>
-    <h1>c#, lua, html, css, js and other code samples</h1>
-    <h2>coming soon... <spoiler>or is it?</spoiler></h2>
+    <h1>C#, Lua, HTML, CSS, JavaScript and other code samples.</h1>
+    <h2>Welcome to code.twistynado.com!</h2>
+
+    <section>
+        <sectiontitle>C# Colorable Vertical ProgressBar</sectiontitle>
+        <br>
+        <explanation>
+            This overrides the OnPaintBackground void and OnPaint void to color the ProgressBar the ForeColor and make it vertical.
+        </explanation>
+        <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><pre style="margin: 0; line-height: 125%"><span style="color: #0000aa">public</span> <span style="color: #0000aa">class</span> <span style="color: #00aa00; text-decoration: underline">VerticalProgressBar</span> : ProgressBar
+{
+    <span style="color: #0000aa">protected</span> <span style="color: #0000aa">override</span> CreateParams CreateParams
+    {
+        <span style="color: #0000aa">get</span>
+        {
+            CreateParams cp = <span style="color: #0000aa">base</span>.CreateParams;
+            cp.Style |= <span style="color: #009999">0</span>x04;
+            <span style="color: #0000aa">return</span> cp;
+        }
+    }
+
+    <span style="color: #0000aa">public</span> <span style="color: #00aa00">VerticalProgressBar</span>()
+    {
+        <span style="color: #0000aa">this</span>.SetStyle(ControlStyles.UserPaint, <span style="color: #0000aa">true</span>);
+    }
+
+    <span style="color: #0000aa">protected</span> <span style="color: #0000aa">override</span> <span style="color: #0000aa">void</span> <span style="color: #00aa00">OnPaintBackground</span>(PaintEventArgs pevent)
+    {
+        <span style="color: #aaaaaa; font-style: italic">// None... Helps control the flicker.</span>
+    }
+
+    <span style="color: #0000aa">protected</span> <span style="color: #0000aa">override</span> <span style="color: #0000aa">void</span> <span style="color: #00aa00">OnPaint</span>(PaintEventArgs e)
+    {
+        <span style="color: #0000aa">const</span> <span style="color: #00aaaa">int</span> inset = <span style="color: #009999">2</span>; <span style="color: #aaaaaa; font-style: italic">// A single inset value to control teh sizing of the inner rect.</span>
+
+        <span style="color: #0000aa">using</span> (Image offscreenImage = <span style="color: #0000aa">new</span> Bitmap(<span style="color: #0000aa">this</span>.Width, <span style="color: #0000aa">this</span>.Height))
+        {
+            <span style="color: #0000aa">using</span> (Graphics offscreen = Graphics.FromImage(offscreenImage))
+            {
+                Rectangle rect = <span style="color: #0000aa">new</span> Rectangle(<span style="color: #009999">0</span>, <span style="color: #009999">0</span>, <span style="color: #0000aa">this</span>.Width, <span style="color: #0000aa">this</span>.Height);
+
+                <span style="color: #0000aa">if</span> (ProgressBarRenderer.IsSupported)
+                    ProgressBarRenderer.DrawVerticalBar(offscreen, rect);
+
+                rect.Inflate(<span style="color: #0000aa">new</span> Size(-inset, -inset)); <span style="color: #aaaaaa; font-style: italic">// Deflate inner rect.</span>
+                rect.Height = (<span style="color: #00aaaa">int</span>)(rect.Height * ((<span style="color: #00aaaa">double</span>)<span style="color: #0000aa">this</span>.Value / <span style="color: #0000aa">this</span>.Maximum));
+                <span style="color: #0000aa">if</span> (rect.Height == <span style="color: #009999">0</span>) rect.Height = <span style="color: #009999">1</span>; <span style="color: #aaaaaa; font-style: italic">// Can&#39;t draw rec with width of 0.</span>
+
+                LinearGradientBrush brush = <span style="color: #0000aa">new</span> LinearGradientBrush(rect, <span style="color: #0000aa">this</span>.ForeColor, <span style="color: #0000aa">this</span>.ForeColor, LinearGradientMode.Vertical);
+                offscreen.FillRectangle(brush, inset, <span style="color: #0000aa">this</span>.Height - rect.Height - inset, rect.Width, rect.Height);
+
+                e.Graphics.DrawImage(offscreenImage, <span style="color: #009999">0</span>, <span style="color: #009999">0</span>);
+            }
+        }
+    }
+}
+</pre></td></tr></table></div>
+
+        <img src="" class="result">
+    </section>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
