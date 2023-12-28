@@ -1,9 +1,9 @@
 spoiler{
-    filter: blur(24px)
+    filter: blur(8px)
 }
 
 spoiler:hover{
-    filter: blur(12px);
+    filter: blur(4px);
 }
 
 spoiler:active{
